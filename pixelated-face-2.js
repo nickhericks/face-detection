@@ -1,13 +1,19 @@
 const video = document.querySelector('.webcam');
+
+// canvas for finding face
 const canvas = document.querySelector('.video');
 const ctx = canvas.getContext('2d');
 
+// canvas for adding face blur
 const faceCanvas = document.querySelector('.face');
 const faceCtx = canvas.getContext('2d');
 
-const faceDetector = new window.FaceDetector();
+// this is the experimental feature within Chrome
+const faceDetector = new window.FaceDetector(
+	{ fastMode: true }
+);
 
-console.log(video, canvas, faceCanvas, faceDetector);
+// console.log(video, canvas, faceCanvas, faceDetector);
 
 //write a function that will populate the user's video
 async function populateVideo() {
@@ -20,7 +26,17 @@ async function populateVideo() {
 	await video.play();
 
 	// size the canvases to be the same size as the video
-	
+	// this will allow us to line everything up when applying the face blur
+	canvas.width = video.videowidth;
+	canvas.height = video.videheight;
+	faceCanvas.width = video.videowidth;
+	faceCanvas.height = video.videheight;
 }
 
-populateVideo();
+async function detect() {
+	const faces = await faceDetector.detect(video);
+	console.log(faces);
+
+}
+
+populateVideo().then(detect);
