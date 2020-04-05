@@ -59,7 +59,7 @@ async function detect() {
 	// requestAnimationFrame allows us to have the browser tell us when it is ready to update the frame, then do something when it is ready.
 	// ask browser when the next animation frame is and tell it to run detect for us
 	faces.forEach(drawFace);
-	// faces.forEach(censor);
+	faces.forEach(censor);
 	requestAnimationFrame(detect);
 }
 
